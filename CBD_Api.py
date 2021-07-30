@@ -35,8 +35,13 @@ class printer():
 
     def __stripFormatting__(self, string) -> str: # trims b'End file list\r\n' to End file list
         string = string[2:]
-        string = string[0:len(string)-5]
+        string = string[:len(string)-5]
         return string
+
+    def __stripOkFormatting__(self, string) -> str: # trims b' ok End file list\r\n' to End file list
+        
+        output = string[8:]
+        return output
 
     def __stripSpaceFromBack__(self, string) -> str:
         bIndex = max([i for i, ltr in enumerate(string) if ltr == "b"]) # this returns the last 'B' from the given string. Because the last 'B' is that of the .ctb extension we know that the next char is a space that delimits filename and filesize
@@ -54,11 +59,29 @@ class printer():
                         output.append(self.__stripSpaceFromBack__(request))
 
                 request = self.__stripFormatting__((str)(self.sock.recv(self.buffSize)))
+                
             print(output)
+        
+    def homeZ(self) -> None:
+        self.__sendRecieveSingle__("G28 Z")
 
+    def getZ(self) -> float:
+        pos = (float)((str)(self.__sendRecieveSingle__("M114")).split(" ")[4].strip("Z:"))
+        return pos
+
+    def jogHard(self,distance) -> None: # uses absolute pos
+        self.__sendRecieveSingle__("G0 Z"+ (str)(distance))
+
+    def jogSoft(self,distance) -> bool: # uses absolute pos
+        if(distance < 200):
+            self.jogHard(distance)
+            return True
+        else:
+            return False
 
 if __name__ == "__main__":
     p = printer("192.168.1.174") # Localhost used to put module into self-test mode
     
-    p.getCardFiles()
-    
+    #p.getCardFiles()
+    #print((p.__sendRecieveSingle__("M114"))) # gives locations
+    #print(p.getZ())
