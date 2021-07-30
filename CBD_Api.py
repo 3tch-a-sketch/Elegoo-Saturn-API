@@ -38,11 +38,6 @@ class printer():
         string = string[:len(string)-5]
         return string
 
-    def __stripOkFormatting__(self, string) -> str: # trims b' ok End file list\r\n' to End file list
-        
-        output = string[8:]
-        return output
-
     def __stripSpaceFromBack__(self, string) -> str:
         bIndex = max([i for i, ltr in enumerate(string) if ltr == "b"]) # this returns the last 'B' from the given string. Because the last 'B' is that of the .ctb extension we know that the next char is a space that delimits filename and filesize
         return((string[:bIndex+1],string[bIndex+2:]))
@@ -79,9 +74,15 @@ class printer():
         else:
             return False
 
+    def removeCardFile(self,filename) -> str:
+        output = (str)(self.__sendRecieveSingle__("M30 "+filename))
+        output = self.__stripFormatting__(output)
+        return output
+
+
 if __name__ == "__main__":
     p = printer("192.168.1.174") # Localhost used to put module into self-test mode
     
-    #p.getCardFiles()
-    #print((p.__sendRecieveSingle__("M114"))) # gives locations
-    #print(p.getZ())
+    p.getCardFiles()
+    #print(p.removeCardFile("_50x50.ctb"))
+    
