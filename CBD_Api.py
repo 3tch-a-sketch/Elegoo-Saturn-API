@@ -248,17 +248,6 @@ class Printer():
         for file in self.getCardFiles():
             self.removeCardFile(file[0])
 
-    def startJobPrint(self) -> str:
-        """Starts a job from the jobs queue
-        
-        Returns:
-            str: result
-        """
-        if self.jobs.not_empty:
-            return self.startPrinting(self.jobs.get())
-        else:
-            return "Queue empty"
-
 
 if __name__ == "__main__":
         p = Printer("192.168.1.174")
