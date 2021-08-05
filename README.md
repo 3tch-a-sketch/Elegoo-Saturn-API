@@ -33,6 +33,16 @@ Uploads the fileNameLocal to the card while naming the file whatever FileNameCar
 ### Format card
 Removes all .ctb files from card
 
+## Installing
+Windows
+```Python
+pip install -r requirements.txt
+```
+MacOs/ Linux
+```Python
+pip3 install -r requirements.txt
+```
+
 ## Example
 ```python
 from CBD_Api import Printer
