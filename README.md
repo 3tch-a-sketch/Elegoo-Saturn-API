@@ -35,11 +35,11 @@ Removes all .ctb files from card
 
 ## Installing
 Windows
-```Python
+```python
 pip install -r requirements.txt
 ```
 MacOs/ Linux
-```Python
+```python
 pip3 install -r requirements.txt
 ```
 
