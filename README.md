@@ -38,7 +38,7 @@ Windows
 ```python
 pip install -r requirements.txt
 ```
-MacOs/ Linux
+MacOS/ Linux
 ```python
 pip3 install -r requirements.txt
 ```
